@@ -16,6 +16,45 @@ stack = stack[:len(stack)-1]
 top := stack[len(stack)-1]
 ```
 
+- **Generic Implementation:** 
+```go
+type Stack[T any] struct {
+    values []T 
+}
+
+func (s *Stack[T]) Push(value T) {
+    s.values = append(s.values, value)
+}
+
+func (s *Stack[T]) Pop() (T, bool) {
+    n := len(s.values)
+    if n == 0 {
+        var zero T
+        return zero, false
+    }
+    popped := s.values[n-1]
+    s.values = s.values[:n-1]
+    return popped, true
+}
+
+func (s *Stack[T]) Empty() bool {
+    return len(s.values) == 0
+}
+
+func (s *Stack[T]) Peek() (T, bool) {
+    n := len(s.values)
+    if n == 0 {
+        var zero T
+        return zero, false
+    }
+    return s.values[n-1], true
+}
+
+func (s *Stack[T]) Size() int {
+    return len(s.values)
+}
+```
+
 ### 2. **Queue**
 - **Go Equivalent:** Like with stacks, queues can be implemented using slices.
 
